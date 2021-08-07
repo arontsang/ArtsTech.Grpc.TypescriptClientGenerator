@@ -1,0 +1,31 @@
+<Project>
+    <PropertyGroup>
+        <GrpcTypescriptOutDir Condition="'$(GrpcTypescriptOutDir)' == ''">$(SpaRoot)src\Generated\foobar</GrpcTypescriptOutDir>
+    </PropertyGroup>
+    <Target Name="Protobuf_Generate_TypeScript" AfterTargets="Protobuf_AfterCompile">
+        <!-- Allows protoc to find the Typescript Protoc Gen script -->
+        <SetEnvVar Name="Path" Value="$(Path);$(MSBuildThisFileDirectory)..\tools" />
+        <ProtoCompile
+                Condition=" '@(_Protobuf_OutOfDateProto)' != '' " 
+                ToolExe="$(Protobuf_ProtocFullPath)"
+                Generator="js" 
+                Protobuf="%(_Protobuf_OutOfDateProto.Source)" 
+                ProtoPath="%(_Protobuf_OutOfDateProto.AdditionalImportDirs);$(Protobuf_StandardImportsPath);%(_Protobuf_OutOfDateProto.ProtoRoot)" 
+                ProtoDepDir="$(Protobuf_DepFilesPath)"
+                OutputDir="$(GrpcTypescriptOutDir)" 
+                OutputOptions="import_style=commonjs,binary"
+                AdditionalProtocArguments="--ts_out=service=grpc-web:$(GrpcTypescriptOutDir)">
+            <Output TaskParameter="GeneratedFiles" ItemName="_Protobuf_Typescript_GeneratedFiles" />
+        </ProtoCompile>
+    </Target>
+
+    <Target Name="Protobuf_Clean_TypeScript" AfterTargets="Protobuf_AfterClean">
+        <ItemGroup>
+            <_TypescriptGeneratedFiles Include="$(GrpcTypescriptOutDir)**\*" Exclude="$(GrpcTypescriptOutDir).gitignore" />
+            <_TypescriptGeneratedDirectories Include="$(GrpcTypescriptOutDir)\**\" />
+        </ItemGroup>
+
+        <Delete Files="@(_TypescriptGeneratedFiles)" />
+        <RemoveDir Directories="@(_TypescriptGeneratedDirectories)" />
+    </Target>
+</Project>

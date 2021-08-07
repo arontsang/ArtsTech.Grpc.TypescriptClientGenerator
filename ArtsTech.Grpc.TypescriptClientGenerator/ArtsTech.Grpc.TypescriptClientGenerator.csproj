@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard1.3</TargetFramework>
+
+        <PackageVersion>0.1.1</PackageVersion>
+
+        <IsPackable>true</IsPackable>
+        <NuSpecFile>ArtsTech.Grpc.TypescriptClientGenerator.nuspec</NuSpecFile>
+    </PropertyGroup>
+    <Target Name="SetPackageProperties" BeforeTargets="GenerateNuspec" DependsOnTargets="InitializeSourceControlInformation">
+        <PropertyGroup>
+            <NuspecProperties>
+                $(NuspecProperties);
+                version=$(PackageVersion);
+                releasenotes=$([MSBuild]::Escape($(PackageReleaseNotes)));
+                output=$([MSBuild]::NormalizeDirectory('$(BaseOutputPath)\$(Configuration)'));
+            </NuspecProperties>
+            <NuspecProperties Condition="'$(RepositoryCommit)' != ''">
+                $(NuspecProperties);
+                repositoryCommit=$(SourceRevisionId);
+            </NuspecProperties>
+        </PropertyGroup>
+    </Target>
+</Project>

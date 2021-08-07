@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+    <metadata>
+        <id>ArtsTech.Grpc.TypescriptClientGenerator</id>
+        <version>$version$</version>
+        <authors>Aron Tsang</authors>
+        <owners>Aron Tsang</owners>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <licenseUrl>https://tldrlegal.com/license/mit-license</licenseUrl>
+        <description>Generates Typescript Client files for gRPC</description>
+        <copyright>Copyright © Aron Tsang</copyright>
+        <tags>msbuild grpc typescript</tags>
+
+        <dependencies>
+            <dependency id="Grpc.Tools" version="2.38.1" />
+            <dependency id="MSBuild.Core.SetEnvVar" version="0.1.3" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="build\" target="build/" />
+        <file src="buildMultiTargeting\" target="buildMultiTargeting/" />
+        <file src="tools\" target="tools/" />
+    </files>
+</package>

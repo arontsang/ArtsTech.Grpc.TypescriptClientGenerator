@@ -1,0 +1,2 @@
+#!/bin/bash
+$(which npx) --quiet --prefer-offline -c ts-protoc-gen@0.15.0
