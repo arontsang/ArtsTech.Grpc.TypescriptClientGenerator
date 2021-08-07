@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <GrpcTypescriptOutDir Condition="'$(GrpcTypescriptOutDir)' == ''">$(SpaRoot)src\Generated\foobar</GrpcTypescriptOutDir>
+        <GrpcTypescriptOutDir Condition="'$(GrpcTypescriptOutDir)' == ''">$(SpaRoot)src\Generated\grpc</GrpcTypescriptOutDir>
     </PropertyGroup>
     <Target Name="Protobuf_Generate_TypeScript" AfterTargets="Protobuf_AfterCompile">
         <!-- Allows protoc to find the Typescript Protoc Gen script -->
