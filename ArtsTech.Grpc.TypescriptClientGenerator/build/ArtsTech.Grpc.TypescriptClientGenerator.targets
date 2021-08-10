@@ -18,10 +18,23 @@
             <Output TaskParameter="GeneratedFiles" ItemName="_Protobuf_Typescript_GeneratedFiles" />
         </ProtoCompile>
     </Target>
+    
+    <Target Name="_Prepare_Typescript_Directory" BeforeTargets="Protobuf_Generate_TypeScript" Condition="!Exists('$(GrpcTypescriptOutDir)')">
+        <PropertyGroup>
+            <_GitIgnore>
+                *
+            </_GitIgnore>
+        </PropertyGroup>
+        <MakeDir Directories="$(GrpcTypescriptOutDir)" />
+        <WriteLinesToFile
+                File="@(GrpcTypescriptOutDir)\.gitignore"
+                Lines="$(_GitIgnore)"
+                Encoding="Unicode"/>
+    </Target>
 
     <Target Name="Protobuf_Clean_TypeScript" AfterTargets="Protobuf_AfterClean">
         <ItemGroup>
-            <_TypescriptGeneratedFiles Include="$(GrpcTypescriptOutDir)**\*" Exclude="$(GrpcTypescriptOutDir).gitignore" />
+            <_TypescriptGeneratedFiles Include="$(GrpcTypescriptOutDir)**\*" Exclude="$(GrpcTypescriptOutDir)\.gitignore" />
             <_TypescriptGeneratedDirectories Include="$(GrpcTypescriptOutDir)\**\" />
         </ItemGroup>
 
